@@ -215,6 +215,7 @@ footer {
 	// margin: 0 20px;
 	/* new things */
 	position: fixed;
+	z-index: 99;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -265,8 +266,11 @@ iframe {
 
 
 @media (max-width: 768px) {
+	#movieBox {
+		position: relative;
+	}
 	header {
-		padding: 250px 0;
+		// padding: 250px 0;
 	}
 	
 	select.releaseYear {
@@ -283,6 +287,9 @@ iframe {
 		margin: 10px;
 		box-shadow: 0px 0px 20px black;
 	}
+	.moviePoster:nth-of-type(n5) {
+		z-index: -3;
+	}
 
 	.moreInfo {
 		flex-direction: row;
@@ -294,9 +301,10 @@ iframe {
 	#movieBox .moreInfoTop, #movieBox .moreInfoBottom {
 		width: 85%;	
 		padding: 10px;
-		position: fixed;
+		// position: fixed; hmmmm
+		position: absolute;
 		top: 50px;
-		left: 50px;
+		left: 5%;
 		right: 50px;
 		bottom: auto;
 		font-size: 80%; 

@@ -29,6 +29,7 @@ app.init = function () {
 
 	$('select').on('change', function () {
 		// grab user choice, store in a variable
+
 		$('#loadingAnimation').removeClass('hidden');
 		var year = $('select').val();
 
@@ -111,14 +112,40 @@ app.topTen = function (topMovies) {
 //we will concat the value from the poster_path key with the rest of the image URL
 // to make the src for the images
 app.displayTopTen = function (movies) {
+
+	var imagesLoaded = 0;
+
+	function showImages() {
+		// code to hide the loading spinner and show the images
+		$('#loadingAnimation').addClass('hidden');
+		// $('#movieBox').append(img);
+		$('#movieBox').removeClass('hidden');
+	}
+
 	movies.forEach(function (displayTopTen) {
 
 		var posterLink = 'https://image.tmdb.org/t/p/original' + displayTopTen.poster_path;
 
 		var img = $('<img>').addClass('moviePoster').attr('src', posterLink).data('movieObject', displayTopTen);
 
-		$('#loadingAnimation').addClass('hidden');
-		$('#movieBox').append(img);
+		img.on('load', function () {
+			imagesLoaded++;
+
+			if (imagesLoaded === movies.length) {
+
+				showImages();
+				//animations below
+				TweenMax.staggerFrom(".moviePoster", 0.3, {
+					scale: 0.5,
+					opacity: 0,
+					delay: 0.1,
+					ease: Back.easeOut
+				}, 0.1);
+			}
+		});
+
+		// $('#loadingAnimation').addClass('hidden');
+		$('#movieBox').append(img).addClass('hidden');
 
 		// var movieTitle = displayTopTen.title;
 	});
@@ -332,7 +359,6 @@ app.hideTheater = function () {
 		$(this).addClass('hideTrailer');
 		$(this).empty();
 	});
-
 };
 
 $(document).ready(function () {
